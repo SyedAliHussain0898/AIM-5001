@@ -110,7 +110,7 @@ class TestFeatures(TestCase):
         data = [[-1, 3], [-0.5, 0], [0, 0], [1, 20]]
         
         scaler = MinMaxScaler()
-        scalar.fit(data)
+        scaler.fit(data)
 
         sk_scaler = sk_min_max()
         sk_scaler.fit(data)
