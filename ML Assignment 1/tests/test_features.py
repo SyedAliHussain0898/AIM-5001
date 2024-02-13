@@ -2,6 +2,8 @@ from aim5005.features import MinMaxScaler, StandardScaler
 import numpy as np
 import unittest
 from unittest.case import TestCase
+from sklearn.preprocessing import StandardScaler as sk_standard_scaler
+from sklearn.preprocessing import MinMaxScaler as sk_min_max
 
 
 ### TO NOT MODIFY EXISTING TESTS
@@ -64,22 +66,61 @@ class TestFeatures(TestCase):
         assert (result == expected).all(), "Scaler transform does not return expected values. Expect {}. Got: {}".format(expected.reshape(1,-1), result.reshape(1,-1))
 
     # TODO: Add a test of your own below this line
+    
+    # Changing dataset and cross-checking with SKLearn
+    
+    def custom_test_standard_scaler_single_value(self):
         
-    def test_standard_scaler_single_value(self):
         data = [[0, 0], [0, 1], [1, 0], [1, 1]]
         expected = np.array([[7., 7.]])
         scaler = StandardScaler()
         scaler.fit(data)
         result = scaler.transform([[4., 4.]])
+        
         assert (result == expected).all(), "Scaler transform does not return expected values. Expect {}. Got: {}".format(expected.reshape(1,-1), result.reshape(1,-1))
-   
-    def test_min_max_scaler_single_value(self):
+        
+    def custom_test_min_max_scaler_single_value(self):
+        
         data = [[-1, 3], [-0.5, 0], [0, 0], [1, 20]]
         expected = np.array([[2.5, 0.2]])
         scaler = MinMaxScaler()
         scaler.fit(data)
-        result = scaler.transform([[4., 4.]]) 
-        assert (result == expected).all(), "Scaler transform does not return expected values. Expect [[1.5 0. ]]. Got: {}".format(result)
+        result = scaler.transform([[4., 4.]])
+        
+        assert (result == expected).all(), "Scaler transform does not return expected values. Expect [[1.5 0. ]]. Got: {}".format(result)        
+
+    #Verifying validity of Alternate Method against SKLearn
+    
+    def sklearn_vs_alternate_method_standard_scaler(self):
+
+        data = [[0, 0], [0, 0], [1, 1], [1, 1]]
+
+        scaler = StandardScaler()
+        scaler.fit(data)
+        
+        sk_scaler = sk_standard_scaler()
+        sk_scaler.fit(data)
+        
+        result = scaler.transform([[4., 4.]])
+        sk_result = sk_scaler.transform([[4., 4.]])
+        
+        assert (sk_result == result).all(), "Alternate transform Method does not return same values as the SKLearn Standard Scaler. Expect {}. Got: {}".format(result.reshape(1,-1), sk_result.reshape(1,-1))
+
+
+    def sklearn_vs_alternate_method_min_max_scaler(self):
+
+        data = [[-1, 3], [-0.5, 0], [0, 0], [1, 20]]
+        
+        scaler = MinMaxScaler()
+        scalar.fit(data)
+
+        sk_scaler = sk_min_max()
+        sk_scaler.fit(data)
+        
+        result = scaler.transform([[4., 4.]])
+        sk_result = sk_scaler.transform([[4., 4.]])
+
+        assert (sk_result == result).all(), "Alternate transform Method does not return same values as the SKLearn MinMax Scaler. Expect {}. Got: {}".format(result.reshape(1,-1), sk_result.reshape(1,-1))
         
     
 if __name__ == '__main__':
