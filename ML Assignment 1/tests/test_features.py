@@ -2,9 +2,7 @@ from aim5005.features import MinMaxScaler, StandardScaler
 import numpy as np
 import unittest
 from unittest.case import TestCase
-from sklearn.preprocessing import StandardScaler as sk_standard_scaler
-from sklearn.preprocessing import MinMaxScaler as sk_min_max
-
+from sklearn.preprocessing import StandardScaler as sk_standard_scaler, MinMaxScaler as sk_min_max
 
 ### TO NOT MODIFY EXISTING TESTS
 
@@ -67,7 +65,7 @@ class TestFeatures(TestCase):
 
     # TODO: Add a test of your own below this line
     
-    # Changing dataset and cross-checking with SKLearn
+    # Changing dataset and testing features
     
     def custom_test_standard_scaler_single_value(self):
         
